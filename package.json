@@ -1,0 +1,20 @@
+{
+  "name": "solskogen-18",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo index.js --live --open --no-debug",
+    "pack": "npm run bundle && npm run packer && rm packed.js",
+    "packer": "ruby squash.rb packed.js packed.html",
+    "bundle": "uglifyjs --compress --mangle -o packed.js -- index.js"
+  },
+  "keywords": [],
+  "author": "Stian Møllersen <stian.moellersen@gmail.com>",
+  "license": "CC-BY-4.0",
+  "devDependencies": {
+    "budo": "^11.2.0",
+    "uglify-es": "^3.3.9"
+  },
+  "dependencies": {}
+}

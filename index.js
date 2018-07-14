@@ -231,9 +231,9 @@ btn.addEventListener('click', function() {
     d.style['background-position'] = '-100px 1000px, -100px 1000px';
     c.style['transition-delay'] = '6s';
     c.style['transform'] = 'translateY(0)';
-    if (document.body.requestFullscreen) {
-      document.body.requestFullscreen();
-    }
+  
+
+
   });
 });
 

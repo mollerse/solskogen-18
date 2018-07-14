@@ -238,8 +238,6 @@ btn.addEventListener('click', function() {
 });
 
 function play(ac) {
-  /// <reference path="wat.d.ts" />
-
   var out = ac.createGain();
   out.connect(ac.destination);
 
@@ -343,32 +341,6 @@ function play(ac) {
   var sr = 44100;
   var oac = new OfflineAudioContext(1, sr / 2, sr);
 
-  // var hihat = oac.createGain();
-  // noise(oac).connect(hihat);
-
-  // for(var i = 0;i<20; ++i){
-  //     hihat.gain.setValueAtTime(0,i/6);
-  //     hihat.gain.linearRampToValueAtTime(.005, i/6+.01);
-  //     //hihat.gain.exponentialRampToValueAtTime(.05,i);
-  //     hihat.gain.exponentialRampToValueAtTime(0.00001,i/6+.07+(i==6)*.09);
-
-  // }
-
-  // var hihatflt = oac.createBiquadFilter();
-  // hihatflt.type="highpass";
-  // hihatflt.frequency.value = 1500;
-  // hihat.connect(hihatflt);
-
-  // noisepat.map((n,i) => {
-  //     var f = oac.createBiquadFilter();
-  //     f.type="peaking";
-  //     f.frequency.value = nf(12*5+n);
-  //     f.Q.setValueAtTime(0,0);
-  //     f.Q.linearRampToValueAtTime(2, i);
-  //     hihatflt.connect(f);
-  //     f.connect(oac.destination);
-  // })
-
   var gain = oac.createGain();
   var osc = oac.createOscillator();
   osc.type = 'triangle';
@@ -383,36 +355,12 @@ function play(ac) {
   osc.frequency.exponentialRampToValueAtTime(620, 0.00015);
   osc.frequency.exponentialRampToValueAtTime(80, 0.05);
   osc.frequency.exponentialRampToValueAtTime(30, 0.12);
-  gain.gain.setValueAtTime(0, 0);
   gain.gain.exponentialRampToValueAtTime(1, 0.002);
   gain.gain.linearRampToValueAtTime(0.0001, 0.12);
 
-  // // SNARE
-  // osc.frequency.setValueAtTime(50, 1);
-  // osc.frequency.exponentialRampToValueAtTime(450, 1.0025);
-  // osc.frequency.exponentialRampToValueAtTime(250, 1.05);
-  // osc.frequency.exponentialRampToValueAtTime(100, 1.2);
-
-  // gain.gain.setValueAtTime(.0001, 1);
-  // gain.gain.exponentialRampToValueAtTime(.3, 1.01);
-  // gain.gain.exponentialRampToValueAtTime(.0001, 1.2);
-
-  // // SNARE NOISE
-  // var snareNoise = noise(oac).connect(oac.createGain());
-  // snareNoise.gain.setValueAtTime(0, 0);
-  // snareNoise.gain.setValueAtTime(0, 1);
-  // snareNoise.gain.exponentialRampToValueAtTime(.4, 1.001);
-  // snareNoise.gain.exponentialRampToValueAtTime(.001, 2);
-
-  // var snf = oac.createBiquadFilter();
-  // //snf.frequency.value = 1000;
-  // snf.frequency.setValueAtTime(2000, 1);
-  // snf.frequency.setTargetAtTime(500, 1, 1);
-  // //snareNoise.connect(snf).connect(oac.destination);
-
   gain.connect(oac.destination);
 
-  oac.oncomplete = e => {
+  oac.oncomplete = function(e) {
     sampler.buffer = e.renderedBuffer;
     sampler.start(16);
   };
